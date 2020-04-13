@@ -1,0 +1,216 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="1.0.0" author="me">
+        <createTable tableName="users">
+            <column name="id" type="BIGSERIAL" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="username" type="VARCHAR(100)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="last_name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="first_name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="VARCHAR(300)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="company" type="VARCHAR(200)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="status" type="VARCHAR(25)" defaultValue="NOT_ACTIVE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.1" author="me">
+        <createTable tableName="roles">
+            <column name="id" type="BIGSERIAL" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="status" type="VARCHAR(25)" defaultValue="ACTIVE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.2" author="me">
+        <createTable tableName="user_roles">
+            <column name="user_id" type="BIGSERIAL">
+            </column>
+            <column name="role_id" type="BIGSERIAL">
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.3" author="me">
+        <addForeignKeyConstraint baseTableName="user_roles"
+                                 baseColumnNames="user_id"
+                                 constraintName="fk_user_roles_user"
+                                 referencedTableName="users"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"/>
+    </changeSet>
+
+    <changeSet id="1.0.4" author="me">
+        <addForeignKeyConstraint baseTableName="user_roles"
+                                 baseColumnNames="role_id"
+                                 constraintName="fk_user_roles_role"
+                                 referencedTableName="roles"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"/>
+    </changeSet>
+
+    <changeSet id="1.0.5" author="me">
+        <createTable tableName="events">
+            <column name="id" type="BIGSERIAL" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(200)">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="type" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="auditory" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dates" type="tsrange []">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR(25)" defaultValue="NOT_ACTIVE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.6" author="me">
+        <createTable tableName="rooms">
+            <column name="id" type="BIGSERIAL" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(200)">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="max_auditory" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR(25)" defaultValue="NOT_ACTIVE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.7" author="me">
+        <createTable tableName="user_events">
+            <column name="user_id" type="BIGSERIAL">
+            </column>
+            <column name="event_id" type="BIGSERIAL">
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.8" author="me">
+        <createTable tableName="event_rooms">
+            <column name="room_id" type="BIGSERIAL">
+            </column>
+            <column name="event_id" type="BIGSERIAL">
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.9" author="me">
+        <addForeignKeyConstraint baseTableName="user_events"
+                                 baseColumnNames="user_id"
+                                 constraintName="fk_user_events_user"
+                                 referencedTableName="users"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"/>
+    </changeSet>
+
+    <changeSet id="1.0.10" author="me">
+        <addForeignKeyConstraint baseTableName="user_events"
+                                 baseColumnNames="event_id"
+                                 constraintName="fk_user_events_event"
+                                 referencedTableName="events"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"/>
+    </changeSet>
+
+    <changeSet id="1.0.11" author="me">
+        <addForeignKeyConstraint baseTableName="event_rooms"
+                                 baseColumnNames="room_id"
+                                 constraintName="fk_event_rooms_room"
+                                 referencedTableName="rooms"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"/>
+    </changeSet>
+
+    <changeSet id="1.0.12" author="me">
+        <addForeignKeyConstraint baseTableName="event_rooms"
+                                 baseColumnNames="event_id"
+                                 constraintName="fk_event_roles_event"
+                                 referencedTableName="events"
+                                 referencedColumnNames="id"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"/>
+    </changeSet>
+
+    <changeSet author="me" id="1.0.13">
+        <dropColumn tableName="events">
+            <column name="dates" type="tsrange[]"/>
+        </dropColumn>
+    </changeSet>
+
+    <changeSet author="me" id="1.0.14">
+        <addColumn tableName="events">
+            <column name="dates" type="text"/>
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>
