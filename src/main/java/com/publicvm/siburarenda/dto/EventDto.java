@@ -21,7 +21,7 @@ public class EventDto {
     private String name;
     private Integer auditory;
     private String type;
-    private List<RoomDto> rooms;
+    private Set<RoomDto> rooms;
     private UserDto user;
     private List<Map<String, String>> dates;
 
@@ -55,7 +55,7 @@ public class EventDto {
         eventDto.setAuditory(event.getAuditory());
         eventDto.setName(event.getName());
         eventDto.setType(event.getType().toString());
-        eventDto.setRooms(event.getRooms().stream().map(RoomDto::roomToDto).collect(Collectors.toList()));
+        eventDto.setRooms(event.getRooms().stream().map(RoomDto::roomToDto).collect(Collectors.toSet()));
         eventDto.setUser(UserDto.fromUser(event.getUser()));
         eventDto.setDates(parseDateJson(event.getDates()));
         return eventDto;

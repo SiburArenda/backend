@@ -16,4 +16,11 @@ public class RoomDto {
         return roomDto;
     }
 
+    public static Room dtoToRoom(RoomDto dto) {
+        Room room = new Room();
+        room.setMaxAuditory(dto.getAuditory());
+        room.setName(dto.getName());
+        return room;
+    }
+
 }

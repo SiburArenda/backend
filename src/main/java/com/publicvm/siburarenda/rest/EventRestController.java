@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/public")
+@RequestMapping("/api/manage")
 public class EventRestController {
 
     private final EventService eventService;

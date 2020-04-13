@@ -1,5 +1,6 @@
 package com.publicvm.siburarenda.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ public class Room extends BaseEntity{
     @Column(name = "max_auditory")
     private Integer maxAuditory;
 
+    @JsonIgnore
     @ManyToOne
     @JoinTable(name = "event_rooms",
             joinColumns = {@JoinColumn(name = "room_id", referencedColumnName = "id")},
