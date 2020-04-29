@@ -17,4 +17,6 @@ public interface RoomService {
 
     List<Event> getRoomCalendar(Long id);
 
+    Room findByName(String name);
+
 }

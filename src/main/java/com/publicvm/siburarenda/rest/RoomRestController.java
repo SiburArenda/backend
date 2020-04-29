@@ -57,7 +57,7 @@ public class RoomRestController {
 
     @GetMapping("/public/rooms")
     public ResponseEntity getAll() {
-        return ResponseEntity.ok(roomService.getAll());
+        return ResponseEntity.ok(roomService.getAll().stream().map(RoomDto::roomToDto).collect(Collectors.toList()));
     }
 
     @GetMapping("/manage/rooms/{id}")

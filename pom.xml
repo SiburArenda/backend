@@ -8,15 +8,15 @@
         <version>2.1.4.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>net.proselyte</groupId>
-    <artifactId>jwtappdemo</artifactId>
+    <packaging>jar</packaging>
+    <groupId>com.publicvm.siburarenda</groupId>
+    <artifactId>siburarenda</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>JwtAppDemo</name>
-    <description>JWT based spring security REST API</description>
+    <name>SiburArendaBackend</name>
+    <description>JWT based spring security REST API for sibur arenda service</description>
 
     <properties>
         <java.version>1.8</java.version>
-        <mysql.connetor.version>8.0.15</mysql.connetor.version>
         <jsonwebtoken.version>0.8.0</jsonwebtoken.version>
     </properties>
 
@@ -89,13 +89,27 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
+
 
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.1.1</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.publicvm.siburarenda.JwtAppDemoApplication</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
             </plugin>
         </plugins>
     </build>

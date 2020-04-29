@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -17,9 +18,21 @@ public class Room extends BaseEntity{
     private Integer maxAuditory;
 
     @JsonIgnore
-    @ManyToOne
-    @JoinTable(name = "event_rooms",
-            joinColumns = {@JoinColumn(name = "room_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "event_id", referencedColumnName = "id")})
-    private Event event;
+    @ManyToMany(mappedBy = "rooms", fetch = FetchType.LAZY)
+    private List<Event> events;
+
+    @Column(name = "tags")
+    private String tags;
+
+    @Column(name = "description")
+    private String description;
+
+    @Override
+    public String toString() {
+        return "Room{" +
+                "name='" + name + '\'' +
+                ", maxAuditory=" + maxAuditory +
+                '}';
+    }
 }
+

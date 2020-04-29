@@ -42,4 +42,9 @@ public class EventServiceImpl implements EventService {
     public Event activate(Event event) {
         return null;
     }
+
+    @Override
+    public Event save(Event event) {
+        return eventRepository.save(event);
+    }
 }

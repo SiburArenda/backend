@@ -213,4 +213,16 @@
         </addColumn>
     </changeSet>
 
+    <changeSet author="me" id="1.0.15">
+        <addColumn tableName="rooms">
+            <column name="description" type="text"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="me" id="1.0.16">
+        <addColumn tableName="rooms">
+            <column name="tags" type="text"/>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>

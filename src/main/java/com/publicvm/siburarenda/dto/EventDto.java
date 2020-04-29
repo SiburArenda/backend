@@ -24,6 +24,7 @@ public class EventDto {
     private Set<RoomDto> rooms;
     private UserDto user;
     private List<Map<String, String>> dates;
+    private String description;
 
     public static List<Map<String, String>> parseDateJson(String dates) {
         JsonFactory factory = new JsonFactory();
@@ -58,6 +59,7 @@ public class EventDto {
         eventDto.setRooms(event.getRooms().stream().map(RoomDto::roomToDto).collect(Collectors.toSet()));
         eventDto.setUser(UserDto.fromUser(event.getUser()));
         eventDto.setDates(parseDateJson(event.getDates()));
+        eventDto.setDescription(event.getDescription());
         return eventDto;
     }
 

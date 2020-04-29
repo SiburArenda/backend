@@ -14,4 +14,6 @@ public interface EventService {
 
     Event activate(Event event);
 
+    Event save(Event event);
+
 }

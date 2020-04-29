@@ -1,8 +1,12 @@
 package com.publicvm.siburarenda.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.publicvm.siburarenda.model.Role;
 import com.publicvm.siburarenda.model.User;
 import lombok.Data;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * DTO class for user requests by ROLE_USER
@@ -19,6 +23,7 @@ public class UserDto {
     private String firstName;
     private String lastName;
     private String email;
+    private List<String> roles;
 
     public User toUser(){
         User user = new User();
@@ -38,6 +43,7 @@ public class UserDto {
         userDto.setFirstName(user.getFirstName());
         userDto.setLastName(user.getLastName());
         userDto.setEmail(user.getEmail());
+        userDto.setRoles(user.getRoles().stream().map(Role::toString).collect(Collectors.toList()));
 
         return userDto;
     }

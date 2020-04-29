@@ -37,6 +37,8 @@ public class RoomServiceImpl implements RoomService {
         }
         result.setName(room.getName());
         result.setMaxAuditory(room.getMaxAuditory());
+        result.setTags(room.getTags());
+        result.setDescription(room.getDescription());
         result.setStatus(Status.ACTIVE);
         result.setUpdated(new Date(System.currentTimeMillis()));
         result.setCreated(new Date(System.currentTimeMillis()));
@@ -67,6 +69,8 @@ public class RoomServiceImpl implements RoomService {
         }
         result.setName(room.getName());
         result.setMaxAuditory(room.getMaxAuditory());
+        result.setDescription(room.getDescription());
+        result.setTags(room.getTags());
         roomRepository.save(result);
         log.info("IN update Room with name: {} was updated", room.getName());
         return result;
@@ -77,7 +81,6 @@ public class RoomServiceImpl implements RoomService {
         List<Room> list = roomRepository.findAll();
         log.info("IN getAll was found {} rooms", list.size());
         return list;
-
     }
 
     @Override
@@ -85,5 +88,10 @@ public class RoomServiceImpl implements RoomService {
         List<Room> rooms = new ArrayList<>();
         rooms.add(roomRepository.findById(id).get());
         return eventRepository.getEventByRooms(rooms);
+    }
+
+    @Override
+    public Room findByName(String name) {
+        return roomRepository.findByName(name);
     }
 }

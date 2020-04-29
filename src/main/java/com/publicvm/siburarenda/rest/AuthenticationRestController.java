@@ -1,5 +1,6 @@
 package com.publicvm.siburarenda.rest;
 
+import com.publicvm.siburarenda.model.Role;
 import com.publicvm.siburarenda.model.Status;
 import com.publicvm.siburarenda.model.User;
 import com.publicvm.siburarenda.security.jwt.JwtTokenProvider;
@@ -62,6 +63,9 @@ public class AuthenticationRestController {
 
             Map<Object, Object> response = new HashMap<>();
             response.put("username", username);
+            response.put("firstName", user.getFirstName());
+            response.put("lastName", user.getLastName());
+            response.put("roles", user.getRoles().stream().map(Role::toString).collect(Collectors.toList()));
             response.put("token", token);
 
             return ResponseEntity.ok(response);

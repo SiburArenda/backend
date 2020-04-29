@@ -2,6 +2,7 @@ package com.publicvm.siburarenda.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.vladmihalcea.hibernate.type.range.PostgreSQLRangeType;
 import com.vladmihalcea.hibernate.type.range.Range;
 import lombok.Data;
@@ -51,6 +52,10 @@ public class Event extends BaseEntity {
             inverseJoinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")})
     private User user;
 
-    @OneToMany(mappedBy = "event", fetch = FetchType.LAZY)
+    @JsonManagedReference
+    @ManyToMany
+    @JoinTable(name = "event_rooms",
+            joinColumns = {@JoinColumn(name = "event_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "room_id", referencedColumnName = "id")})
     private List<Room> rooms;
 }
