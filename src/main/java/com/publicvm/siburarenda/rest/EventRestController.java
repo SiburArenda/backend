@@ -33,6 +33,7 @@ public class EventRestController {
         this.roomService = roomService;
     }
 
+    //TODO(Обработать варинант несуществующих комнат/юзера)
     @PostMapping("user/order")
     public ResponseEntity<Event> addEvent(@RequestBody AddEventDto eventDto) {
         Event event = new Event();

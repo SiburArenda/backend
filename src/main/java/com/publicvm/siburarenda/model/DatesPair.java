@@ -18,6 +18,4 @@ public class DatesPair {
         this.to = to;
         this.status = status;
     }
-
-
 }
