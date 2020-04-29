@@ -3,14 +3,14 @@
 Rest сервис по аренде помещений.
 
 ## Available URLs
-###Public:
-* #####/api/public/login (method = POST)
-    * ######request
+### Public:
+* ##### /api/public/login (method = POST)
+    * ###### request
             {
                 "username" : "username"
                 "password" : "password"
             }
-    * ######response
+    * ###### response
             {
                 "firstName": "user",
                 "lastName": "user",
@@ -25,8 +25,8 @@ Rest сервис по аренде помещений.
             OR
             String: Invalid username or password
             
-* #####/api/public/register (method = POST)
-    * ######request
+* ##### /api/public/register (method = POST)
+    * ###### request
             {
                 "username" : "username",
                 "password" : "password",
@@ -35,12 +35,12 @@ Rest сервис по аренде помещений.
                 "lastName" : "user",
                 "company" : "google"
             }
-    * ######response
+    * ###### response
             String: User with username: usernsame was registred.
             OR
             String: User with such email or username already exists
-* #####/api/public/rooms (method = GET)
-    * ######response
+* ##### /api/public/rooms (method = GET)
+    * ###### response
             [
                 {
                     "name": "name1",
@@ -63,8 +63,8 @@ Rest сервис по аренде помещений.
                       ]
                 }
             ]               
-###User
-* #####/api/user/order (method = POST)
+### User
+* ##### /api/user/order (method = POST)
     * ###### request 
             {
                 "name" : "name of event",
@@ -104,7 +104,7 @@ Rest сервис по аренде помещений.
 
 ### Manager
 * ##### /api/manage/users/{id} (method = GET)
-    * ######response 
+    * ###### response 
             {
                 "id": 1,
                 "username": "user",
@@ -118,7 +118,7 @@ Rest сервис по аренде помещений.
                 ]
             }
 * ##### /api/manage/rooms/{id} (method = GET) //info about room calendar
-    * ######response 
+    * ###### response 
             [
                 {
                     "name": "Party",
@@ -168,6 +168,6 @@ Rest сервис по аренде помещений.
                     "description": "comment"
                 }
             ]
-* #####/api/manage/events (method = GET) //info about all events
-    * ######response
+* ##### /api/manage/events (method = GET) //info about all events
+    * ###### response
             {Same content as in /api/manage/rooms/{id}}
