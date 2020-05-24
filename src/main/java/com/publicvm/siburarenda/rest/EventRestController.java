@@ -97,4 +97,17 @@ public class EventRestController {
         log.info("In EventRestController modifyEvent was invoked");
         return ResponseEntity.ok(EventDto.eventToDto(event));
     }
+
+    @PostMapping(value = "/manage/events/activate")
+    public ResponseEntity<String> activateEvent(@RequestParam Long id, @RequestBody EventDto eventDto) {
+        if (!eventDto.getId().equals(id))
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied");
+        Event event = eventService.getById(id);
+        if (event == null) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Wasn't found");
+        }
+        event.setStatus(Status.ACTIVE);
+        eventService.save(event);
+        return ResponseEntity.ok("Event with id: " + id + " was saved");
+    }
 }
