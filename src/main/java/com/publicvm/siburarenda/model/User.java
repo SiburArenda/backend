@@ -61,4 +61,8 @@ public class User extends BaseEntity {
                 ", company='" + company + '\'' +
                 '}';
     }
+
+    public Integer eventsCount() {
+        return events.size();
+    }
 }

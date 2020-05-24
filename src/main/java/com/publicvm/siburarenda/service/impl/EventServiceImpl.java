@@ -81,5 +81,20 @@ public class EventServiceImpl implements EventService {
         event.setDates(eventDto.getDates());
         event.setDescription(eventDto.getComment());
     }
+
+    @Override
+    public Event getById(Long id) {
+        return eventRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<Event> getAcceptedEvents() {
+        return eventRepository.getEventByStatus(Status.ACTIVE);
+    }
+
+    @Override
+    public List<Event> getNotAcceptedEvents() {
+        return eventRepository.getEventByStatus(Status.NOT_ACTIVE);
+    }
 }
 

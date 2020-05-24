@@ -81,15 +81,18 @@ public class EventRestController {
                     .stream().map(EventDto::eventToDto).collect(Collectors.toList()));
         } else {
             log.warn("In EventRestController getAllByUsername token invalid");
-            return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).body(new ArrayList<>());
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ArrayList<>());
         }
     }
 
     @PostMapping("user/events/modify")
     public ResponseEntity<EventDto> modifyEvent(@RequestBody AddEventDto eventDto, @RequestParam Long id) {
-        Event event = new Event();
+        Event event = eventService.getById(id);
+        if (event == null) {
+            log.warn("In modifyEvent event with id: " + id + " doesn't exists");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new EventDto());
+        }
         eventService.fillEventWithDto(eventDto, event);
-        event.setId(id);
         eventService.update(event);
         log.info("In EventRestController modifyEvent was invoked");
         return ResponseEntity.ok(EventDto.eventToDto(event));

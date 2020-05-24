@@ -25,5 +25,11 @@ public interface EventService {
 
     void update(Event event);
 
-    public void  fillEventWithDto(AddEventDto eventDto, Event event);
+    void  fillEventWithDto(AddEventDto eventDto, Event event);
+
+    Event getById(Long id);
+
+    List<Event> getAcceptedEvents();
+
+    public List<Event> getNotAcceptedEvents();
 }

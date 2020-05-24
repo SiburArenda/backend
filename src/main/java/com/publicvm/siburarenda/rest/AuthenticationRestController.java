@@ -63,10 +63,12 @@ public class AuthenticationRestController {
             String token = jwtTokenProvider.createToken(username, user.getRoles().stream().collect(Collectors.toList()));
 
             Map<Object, Object> response = new HashMap<>();
+            response.put("id", user.getId());
             response.put("username", username);
             response.put("firstName", user.getFirstName());
             response.put("lastName", user.getLastName());
             response.put("roles", user.getRoles().stream().map(Role::toString).collect(Collectors.toList()));
+            response.put("company", user.getCompany());
             response.put("token", token);
             log.info("In authRestController login user " + requestDto.getUsername() + " was found");
             return ResponseEntity.ok(response);

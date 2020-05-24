@@ -20,4 +20,6 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     void setEventInfoById(Integer aud, String dates, String des, String name, TypeOfParty type,
                           Status status, Long id);
 
+    List<Event> getEventByStatus(Status status);
+
 }

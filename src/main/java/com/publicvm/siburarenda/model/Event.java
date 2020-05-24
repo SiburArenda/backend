@@ -33,15 +33,6 @@ public class Event extends BaseEntity {
     @Column(name = "auditory")
     private Integer auditory;
 
-//    @Type(
-//            type = "com.vladmihalcea.hibernate.type.array.ListArrayType",
-//            parameters = {
-//                    @org.hibernate.annotations.Parameter(
-//                            name = ListArrayType.SQL_ARRAY_TYPE,
-//                            value = "date_range"
-//                    )
-//            }
-//    )
     @Column (name = "dates")
     private String dates;
 
