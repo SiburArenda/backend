@@ -25,14 +25,13 @@ public class UserDto {
     private String email;
     private List<String> roles;
 
-    public User toUser(){
+    public static User toUser(UserDto userDto){
         User user = new User();
-        user.setId(id);
-        user.setUsername(username);
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setEmail(email);
-
+        user.setId(userDto.getId());
+        user.setUsername(userDto.getUsername());
+        user.setFirstName(userDto.getFirstName());
+        user.setLastName(userDto.getLastName());
+        user.setEmail(userDto.getEmail());
         return user;
     }
 

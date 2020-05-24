@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 @Data
 public class RoomDto {
 
+    private Long id;
     private String name;
     private Integer auditory;
     private String description;
@@ -18,6 +19,7 @@ public class RoomDto {
 
     public static RoomDto roomToDto(Room room) {
         RoomDto roomDto = new RoomDto();
+        roomDto.setId(room.getId());
         roomDto.setAuditory(room.getMaxAuditory());
         roomDto.setName(room.getName());
         roomDto.setDescription(room.getDescription());
@@ -27,6 +29,7 @@ public class RoomDto {
 
     public static Room dtoToRoom(RoomDto dto) {
         Room room = new Room();
+        room.setId(dto.getId());
         room.setMaxAuditory(dto.getAuditory());
         room.setName(dto.getName());
         room.setDescription(dto.getDescription());

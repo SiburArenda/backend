@@ -3,6 +3,7 @@ package com.publicvm.siburarenda.service.impl;
 import com.publicvm.siburarenda.dto.RegisterRequestDto;
 import com.publicvm.siburarenda.repository.RoleRepository;
 import com.publicvm.siburarenda.repository.UserRepository;
+import com.publicvm.siburarenda.service.EmailService;
 import com.publicvm.siburarenda.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import com.publicvm.siburarenda.model.Role;
@@ -10,9 +11,11 @@ import com.publicvm.siburarenda.model.Status;
 import com.publicvm.siburarenda.model.User;
 import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.util.*;
 
@@ -47,9 +50,8 @@ public class UserServiceImpl implements UserService {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(userRoles);
-        user.setStatus(Status.NOT_ACTIVE);
+        user.setStatus(Status.ACTIVE);
         //TODO(email activation);
-
         User registeredUser = userRepository.save(user);
 
         log.info("IN register - user: {} successfully registered", registeredUser);
@@ -88,8 +90,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User activate(User user) {
-        return null;
+    public User activate(String username, String token) throws BadCredentialsException{
+        User user = userRepository.findByUsername(username);
+        if (user.getId() == Integer.parseInt(token) && user.getUsername().equals(username)) {
+            user.setStatus(Status.ACTIVE);
+            userRepository.save(user);
+        } else {
+            throw new BadCredentialsException("Bad credentials");
+        }
+        return user;
     }
 
     @Override
@@ -119,9 +128,18 @@ public class UserServiceImpl implements UserService {
         return result;
     }
 
+
+
     @Override
     public void delete(Long id) {
         userRepository.deleteById(id);
         log.info("IN delete - user with id: {} successfully deleted", id);
+    }
+
+    @Override
+    @Transactional
+    public void update(User user) {
+        userRepository.setUserInfoById(user.getUsername(), user.getStatus(), user.getCompany(),
+                user.getEmail(), user.getFirstName(), user.getLastName(), user.getId());
     }
 }

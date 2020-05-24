@@ -19,9 +19,9 @@ public interface UserService {
 
     User registerManager(User user);
 
-    User activate(User user);
+    User activate(String username, String token);
 
-    public User registerDtoToUser(RegisterRequestDto dto);
+    User registerDtoToUser(RegisterRequestDto dto);
 
     List<User> getAll();
 
@@ -30,6 +30,8 @@ public interface UserService {
     User findById(Long id);
 
     void delete(Long id);
+
+    void update(User user);
 
 
 }

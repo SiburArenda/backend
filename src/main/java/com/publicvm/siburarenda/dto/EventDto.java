@@ -2,14 +2,9 @@ package com.publicvm.siburarenda.dto;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
-import com.publicvm.siburarenda.model.DatesPair;
 import com.publicvm.siburarenda.model.Event;
-import com.publicvm.siburarenda.model.User;
-import com.vladmihalcea.hibernate.type.range.Range;
+import com.publicvm.siburarenda.model.TypeOfParty;
 import lombok.Data;
-import org.json.JSONArray;
-import org.springframework.boot.json.JacksonJsonParser;
-import org.springframework.http.codec.json.Jackson2JsonEncoder;
 
 import java.io.IOException;
 import java.util.*;
@@ -18,6 +13,7 @@ import java.util.stream.Collectors;
 @Data
 public class EventDto {
 
+    private Long id;
     private String name;
     private Integer auditory;
     private String type;
@@ -53,6 +49,7 @@ public class EventDto {
 
     public static EventDto eventToDto(Event event){
         EventDto eventDto = new EventDto();
+        eventDto.setId(event.getId());
         eventDto.setAuditory(event.getAuditory());
         eventDto.setName(event.getName());
         eventDto.setType(event.getType().toString());
@@ -62,6 +59,16 @@ public class EventDto {
         eventDto.setDescription(event.getDescription());
         return eventDto;
     }
+
+//    public static Event dtoToEvent(EventDto eventDto) {
+//        Event event = new Event();
+//        event.setAuditory(eventDto.getAuditory());
+//        event.setName(eventDto.getName());
+//        event.setType(TypeOfParty.valueOf(eventDto.getType()));
+//        event.setRooms(eventDto.getRooms().stream().map(RoomDto::dtoToRoom).collect(Collectors.toList()));
+//        event.setUser(UserDto.toUser(eventDto.getUser()));
+//        event.setDates();
+//    }
 
 }
 

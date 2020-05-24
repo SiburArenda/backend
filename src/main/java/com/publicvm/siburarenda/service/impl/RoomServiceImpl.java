@@ -92,6 +92,10 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public Room findByName(String name) {
-        return roomRepository.findByName(name);
+        Room room = roomRepository.findByName(name);
+        if (room == null) {
+            System.out.println("ADSADSAJHFALKSHGFJKSAHDLANHBIUAHNDLKBAHGDUHGSABHKDBGSAUDGSAHLKDISAD");
+        }
+        return room;
     }
 }
