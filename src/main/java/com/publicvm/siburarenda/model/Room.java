@@ -18,7 +18,7 @@ public class Room extends BaseEntity{
     private Integer maxAuditory;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "rooms", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "rooms", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Event> events;
 
     @Column(name = "tags")

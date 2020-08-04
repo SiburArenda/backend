@@ -1,6 +1,5 @@
 package com.publicvm.siburarenda.rest;
 
-import com.publicvm.siburarenda.dto.AddEventDto;
 import com.publicvm.siburarenda.dto.EventDto;
 import com.publicvm.siburarenda.model.Event;
 import com.publicvm.siburarenda.model.Room;
@@ -17,7 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,22 +40,9 @@ public class EventRestController {
 
     //TODO(Обработать варинант несуществующих комнат/юзера)
     @PostMapping("user/order")
-    public ResponseEntity<Event> addEvent(@RequestBody AddEventDto eventDto) {
-        Event event = new Event();
-        event.setAuditory(eventDto.getAuditory());
-        event.setDescription(eventDto.getComment());
-        event.setDates(eventDto.getDates());
-        event.setName(eventDto.getName());
-        List<Room> rooms = new ArrayList<>();
-        for (String s : eventDto.getRooms()) {
-            Room room = roomService.findByName(s);
-            if(room != null) {
-                rooms.add(room);
-            }
-        }
-        event.setRooms(rooms);
+    public ResponseEntity<Event> addEvent(@RequestBody EventDto eventDto) {
+        Event event = EventDto.toEvent(eventDto);
         event.setType(TypeOfParty.valueOf(eventDto.getType().toUpperCase()));
-        event.setUser(userService.findByUsername(eventDto.getUser()));
         event.setCreated(new Date(System.currentTimeMillis()));
         event.setUpdated(new Date(System.currentTimeMillis()));
         event.setStatus(Status.NOT_ACTIVE);
@@ -68,7 +54,7 @@ public class EventRestController {
     @GetMapping("manage/events")
     public ResponseEntity<List<EventDto>> getAll() {
         log.info("In EventRestController getAll OK");
-        return ResponseEntity.ok(eventService.getAll().stream().map(EventDto::eventToDto).collect(Collectors.toList()));
+        return ResponseEntity.ok(eventService.getAll().stream().map(EventDto::toDto).collect(Collectors.toList()));
     }
 
     @GetMapping("user/events")
@@ -78,7 +64,7 @@ public class EventRestController {
         if(tokenProvider.getAuthentication(token).getName().equals(username)) {
             log.info("In EventRestController getAllByUsername ALL OK");
             return ResponseEntity.ok(eventService.getAllByUsername(userService.findByUsername(username))
-                    .stream().map(EventDto::eventToDto).collect(Collectors.toList()));
+                    .stream().map(EventDto::toDto).collect(Collectors.toList()));
         } else {
             log.warn("In EventRestController getAllByUsername token invalid");
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ArrayList<>());
@@ -86,16 +72,16 @@ public class EventRestController {
     }
 
     @PostMapping("user/events/modify")
-    public ResponseEntity<EventDto> modifyEvent(@RequestBody AddEventDto eventDto, @RequestParam Long id) {
+    public ResponseEntity<EventDto> modifyEvent(@RequestBody EventDto eventDto, @RequestParam Long id) {
         Event event = eventService.getById(id);
         if (event == null) {
             log.warn("In modifyEvent event with id: " + id + " doesn't exists");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new EventDto());
         }
-        eventService.fillEventWithDto(eventDto, event);
+        event = EventDto.toEvent(eventDto);
         eventService.update(event);
         log.info("In EventRestController modifyEvent was invoked");
-        return ResponseEntity.ok(EventDto.eventToDto(event));
+        return ResponseEntity.ok(EventDto.toDto(event));
     }
 
     @PostMapping(value = "/manage/events/activate")

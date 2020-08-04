@@ -2,7 +2,6 @@ package com.publicvm.siburarenda.rest;
 
 import com.publicvm.siburarenda.dto.EventDto;
 import com.publicvm.siburarenda.dto.UserDto;
-import com.publicvm.siburarenda.model.Event;
 import com.publicvm.siburarenda.model.User;
 import com.publicvm.siburarenda.service.EventService;
 import com.publicvm.siburarenda.service.UserService;
@@ -39,7 +38,7 @@ public class ManageRestController {
     public ResponseEntity<List<EventDto>> getAcceptedEvents() {
         return ResponseEntity.ok(eventService.getAcceptedEvents()
                 .stream()
-                .map(EventDto::eventToDto)
+                .map(EventDto::toDto)
                 .collect(Collectors.toList()));
     }
 
@@ -47,7 +46,7 @@ public class ManageRestController {
     public ResponseEntity<List<EventDto>> getNotAcceptedEvents() {
         return ResponseEntity.ok(eventService.getNotAcceptedEvents()
                 .stream()
-                .map(EventDto::eventToDto)
+                .map(EventDto::toDto)
                 .collect(Collectors.toList()));
     }
 

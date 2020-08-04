@@ -33,8 +33,8 @@ public class Event extends BaseEntity {
     @Column(name = "auditory")
     private Integer auditory;
 
-    @Column (name = "dates")
-    private String dates;
+    @OneToMany(mappedBy = "event", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Dates> dates;
 
     @JsonIgnore
     @ManyToOne

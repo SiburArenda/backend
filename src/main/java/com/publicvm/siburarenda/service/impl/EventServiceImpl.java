@@ -1,6 +1,9 @@
 package com.publicvm.siburarenda.service.impl;
 
-import com.publicvm.siburarenda.dto.AddEventDto;
+import com.publicvm.siburarenda.dto.DatesDto;
+import com.publicvm.siburarenda.dto.EventDto;
+import com.publicvm.siburarenda.dto.RoomDto;
+import com.publicvm.siburarenda.dto.UserDto;
 import com.publicvm.siburarenda.model.*;
 import com.publicvm.siburarenda.repository.EventRepository;
 import com.publicvm.siburarenda.service.EventService;
@@ -11,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Arrays;
+import java.sql.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -66,20 +69,15 @@ public class EventServiceImpl implements EventService {
     @Transactional
     //TODO(победить апдейт для листа комнат)
     public void update(Event event) {
-        eventRepository.setEventInfoById(event.getAuditory(), event.getDates(),
-                event.getDescription(), event.getName(),
-                event.getType(), event.getStatus(), event.getId());
-    }
-
-    @Override
-    public void fillEventWithDto(AddEventDto eventDto, Event event) {
-        event.setName(eventDto.getName());
-        event.setAuditory(eventDto.getAuditory());
-        event.setType(TypeOfParty.valueOf(eventDto.getType()));
-        event.setRooms(Arrays.stream(eventDto.getRooms()).map(room -> roomService.findByName(room)).collect(Collectors.toList()));
-        event.setUser(userService.findByUsername(eventDto.getUser()));
-        event.setDates(eventDto.getDates());
-        event.setDescription(eventDto.getComment());
+        Event updated = eventRepository.getOne(event.getId());
+        updated.setStatus(event.getStatus());
+        updated.setRooms(event.getRooms());
+        updated.setAuditory(event.getAuditory());
+        updated.setType(event.getType());
+        updated.setName(event.getName());
+        updated.setDescription(event.getDescription());
+        updated.setUpdated(new Date(System.currentTimeMillis()));
+        eventRepository.save(updated);
     }
 
     @Override

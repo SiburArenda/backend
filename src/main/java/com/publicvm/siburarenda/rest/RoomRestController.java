@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
@@ -29,7 +28,7 @@ public class RoomRestController {
     @PostMapping("/admin/rooms/add")
     public ResponseEntity add(@RequestBody RoomDto roomDto) {
         try {
-            roomService.add(RoomDto.dtoToRoom(roomDto));
+            roomService.add(RoomDto.toRoom(roomDto));
         } catch (UnsupportedOperationException ex) {
             log.error("IN RoomRestController add unsupported op ex " + ex.getStackTrace());
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("WHOOOPS :)");
@@ -41,7 +40,7 @@ public class RoomRestController {
     @PostMapping("/admin/rooms/delete")
     public ResponseEntity delete(@RequestBody RoomDto roomDto) {
         try {
-            roomService.delete(RoomDto.dtoToRoom(roomDto));
+            roomService.delete(RoomDto.toRoom(roomDto));
         } catch (UnsupportedOperationException ex) {
             log.error("IN RoomRestController delete unsupported op ex " + ex.getStackTrace());
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ex.getMessage());
@@ -53,7 +52,7 @@ public class RoomRestController {
     @PostMapping("/admin/rooms/update")
     public ResponseEntity update(@RequestBody RoomDto roomDto) {
         try {
-            roomService.update(RoomDto.dtoToRoom(roomDto));
+            roomService.update(RoomDto.toRoom(roomDto));
         } catch (UnsupportedOperationException ex) {
             log.error("IN RoomRestController update unsupported op ex " + ex.getStackTrace());
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ex.getMessage());
@@ -66,7 +65,7 @@ public class RoomRestController {
     @GetMapping("/public/rooms")
     public ResponseEntity getAll() {
         log.info("IN RoomRestController getAll was invoked");
-        return ResponseEntity.ok(roomService.getAll().stream().map(RoomDto::roomToDto).collect(Collectors.toList()));
+        return ResponseEntity.ok(roomService.getAll().stream().map(RoomDto::toDto).collect(Collectors.toList()));
     }
 
     @GetMapping("/manage/rooms/{id}")
@@ -74,7 +73,7 @@ public class RoomRestController {
         log.info("IN RoomRestController getRoomCalendar was invoked");
         return ResponseEntity.ok(roomService.getRoomCalendar(id)
                 .stream()
-                .map(EventDto::eventToDto)
+                .map(EventDto::toDto)
                 .collect(Collectors.toSet()));
 
     }

@@ -2,7 +2,6 @@ package com.publicvm.siburarenda.rest;
 
 import com.publicvm.siburarenda.dto.RegisterRequestDto;
 import com.publicvm.siburarenda.model.User;
-import com.publicvm.siburarenda.service.EmailService;
 import com.publicvm.siburarenda.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.postgresql.util.PSQLException;
@@ -19,12 +18,10 @@ import org.springframework.web.bind.annotation.*;
 public class RegisterRestController {
 
     private final UserService userService;
-    private final EmailService emailService;
 
     @Autowired
-    public RegisterRestController(UserService userService, EmailService emailService) {
+    public RegisterRestController(UserService userService) {
         this.userService = userService;
-        this.emailService = emailService;
     }
 
     @PostMapping(value = "public/register")

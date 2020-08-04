@@ -14,12 +14,6 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     List<Event> getEventByUser(User user);
 
-    @Modifying
-    @Query("update Event e set e.auditory = ?1, e.dates = ?2, e.description = ?3, e.name = ?4, " +
-            "e.type = ?5, e.status = ?6 where e.id = ?7")
-    void setEventInfoById(Integer aud, String dates, String des, String name, TypeOfParty type,
-                          Status status, Long id);
-
     List<Event> getEventByStatus(Status status);
 
 }

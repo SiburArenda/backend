@@ -17,7 +17,7 @@ public class RoomDto {
     private String description;
     private List<String> tags;
 
-    public static RoomDto roomToDto(Room room) {
+    public static RoomDto toDto(Room room) {
         RoomDto roomDto = new RoomDto();
         roomDto.setId(room.getId());
         roomDto.setAuditory(room.getMaxAuditory());
@@ -27,7 +27,7 @@ public class RoomDto {
         return roomDto;
     }
 
-    public static Room dtoToRoom(RoomDto dto) {
+    public static Room toRoom(RoomDto dto) {
         Room room = new Room();
         room.setId(dto.getId());
         room.setMaxAuditory(dto.getAuditory());

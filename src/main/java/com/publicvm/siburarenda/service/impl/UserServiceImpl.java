@@ -3,7 +3,6 @@ package com.publicvm.siburarenda.service.impl;
 import com.publicvm.siburarenda.dto.RegisterRequestDto;
 import com.publicvm.siburarenda.repository.RoleRepository;
 import com.publicvm.siburarenda.repository.UserRepository;
-import com.publicvm.siburarenda.service.EmailService;
 import com.publicvm.siburarenda.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import com.publicvm.siburarenda.model.Role;
@@ -16,8 +15,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.sql.Timestamp;
-import java.util.*;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Implementation of {@link UserService} interface.
@@ -67,8 +67,8 @@ public class UserServiceImpl implements UserService {
         user.setUsername(dto.getUsername());
         user.setCompany(dto.getCompany());
         user.setPassword(dto.getPassword());
-        user.setCreated(new Timestamp(System.currentTimeMillis()));
-        user.setUpdated(new Timestamp(System.currentTimeMillis()));
+        user.setCreated(new Date(System.currentTimeMillis()));
+        user.setUpdated(new Date(System.currentTimeMillis()));
         return user;
     }
 
